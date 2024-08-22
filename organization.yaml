@@ -190,6 +190,8 @@ components:
       properties:
         organizationid:
           type: string
+        tenant:
+          type: string
         name:
           type: string
         address:
