@@ -92,6 +92,42 @@ paths:
               schema:
                 $ref: '#/components/schemas/Product'
       x-openapi-router-controller: swagger_server.controllers.product_controller
+    put:
+      summary: Update a product by ID
+      operationId: products_product_id_put
+      parameters:
+        - name: productId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Product'
+        required: true
+      responses:
+        "200":
+          description: Product updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+      x-openapi-router-controller: swagger_server.controllers.product_controller
+    delete:
+      summary: Delete a product by ID
+      operationId: products_product_id_delete
+      parameters:
+        - name: productId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "204":
+          description: Product deleted successfully
+      x-openapi-router-controller: swagger_server.controllers.product_controller
   /products/{productId}/children:
     post:
       summary: Add a child product to a parent product
@@ -117,6 +153,58 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Product'
+      x-openapi-router-controller: swagger_server.controllers.product_controller
+  /products/{productId}/children/{childProductId}:
+    put:
+      summary: Update a child product by ID
+      operationId: products_child_product_id_put
+      parameters:
+        - name: productId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: The ID of the parent product
+        - name: childProductId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: The ID of the child product
+      requestBody:
+        description: The updated child product details
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Product'
+        required: true
+      responses:
+        "200":
+          description: Child product updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+      x-openapi-router-controller: swagger_server.controllers.product_controller
+    delete:
+      summary: Delete a child product by ID
+      operationId: products_child_product_id_delete
+      parameters:
+        - name: productId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: The ID of the parent product
+        - name: childProductId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: The ID of the child product
+      responses:
+        "204":
+          description: Child product deleted successfully
       x-openapi-router-controller: swagger_server.controllers.product_controller
 components:
   schemas:
