@@ -1,7 +1,9 @@
 openapi: 3.0.3
 info:
   title: NBG CIP Organization API
-  version: "1.0"
+  version: "0.1"
+  description: This is the API for managing organizations in the NBG CIP system provided
+   on the integration layer.
 servers:
 - url: https://api.server.test/v1
 paths:
