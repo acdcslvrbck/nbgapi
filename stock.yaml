@@ -4,7 +4,7 @@ info:
   version: "0.1"
   description: This is the API for managing stock in the NBG CIP system provided on the integration layer. It allows to create, update, delete and retrieve stock entries and related products. [Confluence](https://teampenta-dortmund.atlassian.net/wiki/x/BQBSlw). 
 servers:
-- url: https://9b3d6837-f9f8-4591-8a9b-843bc072ed73.mock.pstmn.io
+- url: https://01c1efa6-d9a5-4fa2-bd86-df9300c88867.mock.pstmn.io
 paths:
   /stock:
     get:

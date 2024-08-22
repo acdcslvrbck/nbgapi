@@ -6,7 +6,7 @@ info:
    on the integration layer. It allows to create, update, delete and retrieve organizations 
    and related customers. Find more information at [Confluence](https://teampenta-dortmund.atlassian.net/wiki/x/BQBSlw).
 servers:
-  - url: https://9b3d6837-f9f8-4591-8a9b-843bc072ed73.mock.pstmn.io
+  - url: https://ca067a59-f9f0-4cf1-a99a-17753d4f8e68.mock.pstmn.io
 paths:
   /organizations:
     get:
