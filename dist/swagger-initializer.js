@@ -9,7 +9,8 @@ window.onload = function() {
       {url: "product.yaml", name: "Product"},
       {url: "order.yaml", name: "Order"},
       {url: "stock.yaml", name: "Stock"},
-      {url: "price.yaml", name: "Price"}
+      {url: "price.yaml", name: "Price"},
+      {url: "petstore.yaml", name: "Petstore"}
     ],
     dom_id: '#swagger-ui',
     deepLinking: true,
