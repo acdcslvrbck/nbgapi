@@ -4,7 +4,7 @@ info:
   version: "0.1"
   description: This is the API for managing products in the NBG CIP system provided on the integration layer. It allows to create, update, delete and retrieve products and related customers. [Confluence](https://teampenta-dortmund.atlassian.net/wiki/x/BQBSlw).
 servers:
-- url: https://api.server.test/v1
+- url: https://9b3d6837-f9f8-4591-8a9b-843bc072ed73.mock.pstmn.io
 paths:
   /products:
     get:
