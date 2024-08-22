@@ -20,6 +20,27 @@ paths:
                 $ref: '#/components/schemas/OrganizationList'
     post:
       summary: Create a new organization
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Organization'
+            example:
+              organizationid: "org123"
+              tenant: "tenant1"
+              name: "Example Organization"
+              address:
+                houseNumber: "123"
+                street: "Main St"
+                city: "Metropolis"
+                state: "NY"
+                postalCode: "12345"
+              email: "contact@example.org"
+              buyers:
+                - buyerid: "buyer123"
+                  name: "John Doe"
+                  email: "john.doe@example.org"
+        required: true
       responses:
         '201':
           description: Organization created successfully
@@ -38,13 +59,13 @@ paths:
             type: string
       responses:
         '200':
-          description: Organization details
+          description: Successful operation
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Organization'
     put:
-      summary: Update an organization
+      summary: Update an organization by ID
       parameters:
         - name: organizationId
           in: path
@@ -52,11 +73,26 @@ paths:
           schema:
             type: string
       requestBody:
-        required: true
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/Organization'
+            example:
+              organizationid: "org123"
+              tenant: "tenant1"
+              name: "Updated Organization"
+              address:
+                houseNumber: "456"
+                street: "Elm St"
+                city: "Gotham"
+                state: "NJ"
+                postalCode: "67890"
+              email: "updated@example.org"
+              buyers:
+                - buyerid: "buyer456"
+                  name: "Jane Smith"
+                  email: "jane.smith@example.org"
+        required: true
       responses:
         '200':
           description: Organization updated successfully
@@ -65,7 +101,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Organization'
     delete:
-      summary: Delete an organization
+      summary: Delete an organization by ID
       parameters:
         - name: organizationId
           in: path
@@ -75,110 +111,6 @@ paths:
       responses:
         '204':
           description: Organization deleted successfully
-  /organizations/{organizationId}/buyers:
-    get:
-      summary: Get all buyers for a specific organization
-      parameters:
-        - name: organizationId
-          in: path
-          required: true
-          schema:
-            type: string
-      responses:
-        '200':
-          description: A list of buyers
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Buyer'
-    post:
-      summary: Add one or more buyers to an existing organization
-      parameters:
-        - name: organizationId
-          in: path
-          required: true
-          schema:
-            type: string
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: array
-              items:
-                $ref: '#/components/schemas/Buyer'
-      responses:
-        '200':
-          description: Buyers added successfully
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Organization'
-  /organizations/{organizationId}/buyers/{buyerId}:
-    get:
-      summary: Get a buyer by ID
-      parameters:
-        - name: organizationId
-          in: path
-          required: true
-          schema:
-            type: string
-        - name: buyerId
-          in: path
-          required: true
-          schema:
-            type: string
-      responses:
-        '200':
-          description: Buyer details
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Buyer'
-    put:
-      summary: Update a buyer
-      parameters:
-        - name: organizationId
-          in: path
-          required: true
-          schema:
-            type: string
-        - name: buyerId
-          in: path
-          required: true
-          schema:
-            type: string
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Buyer'
-      responses:
-        '200':
-          description: Buyer updated successfully
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Buyer'
-    delete:
-      summary: Delete a buyer
-      parameters:
-        - name: organizationId
-          in: path
-          required: true
-          schema:
-            type: string
-        - name: buyerId
-          in: path
-          required: true
-          schema:
-            type: string
-      responses:
-        '200':
-          description: Buyer deleted successfully
 components:
   schemas:
     OrganizationList:
@@ -203,6 +135,21 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Buyer'
+      example:
+        organizationid: "org123"
+        tenant: "tenant1"
+        name: "Example Organization"
+        address:
+          houseNumber: "123"
+          street: "Main St"
+          city: "Metropolis"
+          state: "NY"
+          postalCode: "12345"
+        email: "contact@example.org"
+        buyers:
+          - buyerid: "buyer123"
+            name: "John Doe"
+            email: "john.doe@example.org"
     Address:
       type: object
       properties:
@@ -216,15 +163,23 @@ components:
           type: string
         postalCode:
           type: string
-        country:
-          type: string
+      example:
+        houseNumber: "123"
+        street: "Main St"
+        city: "Metropolis"
+        state: "NY"
+        postalCode: "12345"
     Buyer:
       type: object
       properties:
-        id:
+        buyerid:
           type: string
         name:
           type: string
         email:
           type: string
           format: email
+      example:
+        buyerid: "buyer123"
+        name: "John Doe"
+        email: "john.doe@example.org"
