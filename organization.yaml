@@ -6,78 +6,179 @@ info:
    on the integration layer. It allows to create, update, delete and retrieve organizations 
    and related customers. Find more information at http://swagger.io.
 servers:
-- url: https://api.server.test/v1
+  - url: https://api.server.test/v1
 paths:
   /organizations:
     get:
-      summary: Get all organizations
-      operationId: organizations_get
+      summary: Get a list of organizations
       responses:
-        "200":
-          description: Successful operation
+        '200':
+          description: A list of organizations
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/OrganizationList'
-      x-openapi-router-controller: swagger_server.controllers.default_controller
     post:
       summary: Create a new organization
-      operationId: organizations_post
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Organization'
-        required: true
       responses:
-        "201":
+        '201':
           description: Organization created successfully
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Organization'
-      x-openapi-router-controller: swagger_server.controllers.default_controller
   /organizations/{organizationId}:
-    put:
-      summary: Update an existing organization
-      operationId: organizations_organization_id_put
+    get:
+      summary: Get an organization by ID
       parameters:
-      - name: organizationId
-        in: path
-        required: true
-        style: simple
-        explode: false
-        schema:
-          type: string
+        - name: organizationId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Organization details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Organization'
+    put:
+      summary: Update an organization
+      parameters:
+        - name: organizationId
+          in: path
+          required: true
+          schema:
+            type: string
       requestBody:
+        required: true
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/Organization'
-        required: true
       responses:
-        "200":
+        '200':
           description: Organization updated successfully
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Organization'
-      x-openapi-router-controller: swagger_server.controllers.default_controller
     delete:
       summary: Delete an organization
-      operationId: organizations_organization_id_delete
       parameters:
-      - name: organizationId
-        in: path
-        required: true
-        style: simple
-        explode: false
-        schema:
-          type: string
+        - name: organizationId
+          in: path
+          required: true
+          schema:
+            type: string
       responses:
-        "204":
+        '204':
           description: Organization deleted successfully
-      x-openapi-router-controller: swagger_server.controllers.default_controller
+  /organizations/{organizationId}/buyers:
+    get:
+      summary: Get all buyers for a specific organization
+      parameters:
+        - name: organizationId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: A list of buyers
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Buyer'
+    post:
+      summary: Add one or more buyers to an existing organization
+      parameters:
+        - name: organizationId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/Buyer'
+      responses:
+        '200':
+          description: Buyers added successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Organization'
+  /organizations/{organizationId}/buyers/{buyerId}:
+    get:
+      summary: Get a buyer by ID
+      parameters:
+        - name: organizationId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: buyerId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Buyer details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Buyer'
+    put:
+      summary: Update a buyer
+      parameters:
+        - name: organizationId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: buyerId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Buyer'
+      responses:
+        '200':
+          description: Buyer updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Buyer'
+    delete:
+      summary: Delete a buyer
+      parameters:
+        - name: organizationId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: buyerId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Buyer deleted successfully
 components:
   schemas:
     OrganizationList:
@@ -85,9 +186,6 @@ components:
       items:
         $ref: '#/components/schemas/Organization'
     Organization:
-      required:
-      - id
-      - name
       type: object
       properties:
         organizationid:
@@ -99,43 +197,32 @@ components:
         email:
           type: string
           format: email
-      example:
-        organizationid: organizationid
-        address:
-          country: Example Country
-          city: Example City
-          street: Example Street
-          postalCode: "12345"
-          houseNumber: "123"
-          state: EX
-        name: name
-        email: ""
+        buyers:
+          type: array
+          items:
+            $ref: '#/components/schemas/Buyer'
     Address:
       type: object
       properties:
         houseNumber:
           type: string
-          example: "123"
         street:
           type: string
-          example: Example Street
         city:
           type: string
-          example: Example City
         state:
           type: string
-          example: EX
         postalCode:
           type: string
-          example: "12345"
         country:
           type: string
-          example: Example Country
-      example:
-        country: Example Country
-        city: Example City
-        street: Example Street
-        postalCode: "12345"
-        houseNumber: "123"
-        state: EX
-
+    Buyer:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        email:
+          type: string
+          format: email
