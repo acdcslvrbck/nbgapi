@@ -1,0 +1,254 @@
+openapi: 3.0.3
+info:
+  title: NBG CIP Order API
+  version: "1.0"
+servers:
+- url: https://api.server.test/v1
+paths:
+  /order:
+    get:
+      summary: Get all orders
+      operationId: order_get
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrderList'
+      x-openapi-router-controller: swagger_server.controllers.order_controller
+    post:
+      summary: Create a new order
+      operationId: order_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Order'
+        required: true
+      responses:
+        "201":
+          description: Order created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'
+      x-openapi-router-controller: swagger_server.controllers.order_controller
+  /order/{orderId}:
+    get:
+      summary: Get an order by ID
+      operationId: order_order_id_get
+      parameters:
+        - name: orderId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'
+      x-openapi-router-controller: swagger_server.controllers.order_controller
+    put:
+      summary: Update an existing order
+      operationId: order_order_id_put
+      parameters:
+        - name: orderId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Order'
+        required: true
+      responses:
+        "200":
+          description: Order updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'
+      x-openapi-router-controller: swagger_server.controllers.order_controller
+    delete:
+      summary: Delete an order by ID
+      operationId: order_order_id_delete
+      parameters:
+        - name: orderId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "204":
+          description: Order deleted successfully
+      x-openapi-router-controller: swagger_server.controllers.order_controller
+  /order/{orderId}/status:
+    put:
+      summary: Update the status of an order
+      operationId: order_order_id_status_put
+      parameters:
+        - name: orderId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OrderStatus'
+        required: true
+      responses:
+        "200":
+          description: Order status updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrderStatus'
+      x-openapi-router-controller: swagger_server.controllers.order_controller
+  /offer:
+    get:
+      summary: Get all offers
+      operationId: offer_get
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OfferList'
+      x-openapi-router-controller: swagger_server.controllers.offer_controller
+    post:
+      summary: Create a new offer
+      operationId: offer_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Offer'
+        required: true
+      responses:
+        "201":
+          description: Offer created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Offer'
+      x-openapi-router-controller: swagger_server.controllers.offer_controller
+  /offer/{offerId}:
+    get:
+      summary: Get an offer by ID
+      operationId: offer_offer_id_get
+      parameters:
+        - name: offerId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Offer'
+      x-openapi-router-controller: swagger_server.controllers.offer_controller
+    put:
+      summary: Update an existing offer
+      operationId: offer_offer_id_put
+      parameters:
+        - name: offerId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Offer'
+        required: true
+      responses:
+        "200":
+          description: Offer updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Offer'
+      x-openapi-router-controller: swagger_server.controllers.offer_controller
+    delete:
+      summary: Delete an offer by ID
+      operationId: offer_offer_id_delete
+      parameters:
+        - name: offerId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "204":
+          description: Offer deleted successfully
+      x-openapi-router-controller: swagger_server.controllers.offer_controller
+components:
+  schemas:
+    Order:
+      type: object
+      properties:
+        id:
+          type: string
+        customerId:
+          type: string
+        orderDate:
+          type: string
+          format: date-time
+        status:
+          $ref: '#/components/schemas/OrderStatus'
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrderItem'
+    OrderItem:
+      type: object
+      properties:
+        productId:
+          type: string
+        quantity:
+          type: integer
+        price:
+          type: number
+    OrderStatus:
+      type: object
+      properties:
+        status:
+          type: string
+        updatedAt:
+          type: string
+          format: date-time
+    Offer:
+      type: object
+      properties:
+        id:
+          type: string
+        customerId:
+          type: string
+        offerDate:
+          type: string
+          format: date-time
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrderItem'
+    OrderList:
+      type: array
+      items:
+        $ref: '#/components/schemas/Order'
+    OfferList:
+      type: array
+      items:
+        $ref: '#/components/schemas/Offer'

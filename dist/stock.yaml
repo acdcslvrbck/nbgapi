@@ -1,0 +1,107 @@
+openapi: 3.0.3
+info:
+  title: NBG CIP Stock API
+  version: "1.0"
+servers:
+- url: https://api.server.test/v1
+paths:
+  /stock:
+    get:
+      summary: Get all stock entries
+      operationId: stock_get
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StockList'
+      x-openapi-router-controller: swagger_server.controllers.stock_controller
+    post:
+      summary: Create a new stock entry
+      operationId: stock_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Stock'
+        required: true
+      responses:
+        "201":
+          description: Stock entry created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Stock'
+      x-openapi-router-controller: swagger_server.controllers.stock_controller
+  /stock/{stockId}:
+    get:
+      summary: Get a stock entry by ID
+      operationId: stock_stock_id_get
+      parameters:
+        - name: stockId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Stock'
+      x-openapi-router-controller: swagger_server.controllers.stock_controller
+    put:
+      summary: Update an existing stock entry
+      operationId: stock_stock_id_put
+      parameters:
+        - name: stockId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Stock'
+        required: true
+      responses:
+        "200":
+          description: Stock entry updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Stock'
+      x-openapi-router-controller: swagger_server.controllers.stock_controller
+    delete:
+      summary: Delete a stock entry by ID
+      operationId: stock_stock_id_delete
+      parameters:
+        - name: stockId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "204":
+          description: Stock entry deleted successfully
+      x-openapi-router-controller: swagger_server.controllers.stock_controller
+components:
+  schemas:
+    Stock:
+      type: object
+      properties:
+        id:
+          type: string
+        productId:
+          type: string
+        quantity:
+          type: integer
+        location:
+          type: string
+    StockList:
+      type: array
+      items:
+        $ref: '#/components/schemas/Stock'

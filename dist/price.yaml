@@ -1,0 +1,129 @@
+openapi: 3.0.3
+info:
+  title: NBG CIP Price API
+  version: "1.0"
+servers:
+- url: https://api.server.test/v1
+paths:
+  /price:
+    get:
+      summary: Get all price entries
+      operationId: price_get
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PriceList'
+      x-openapi-router-controller: swagger_server.controllers.price_controller
+    post:
+      summary: Create a new price entry
+      operationId: price_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Price'
+        required: true
+      responses:
+        "201":
+          description: Price entry created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Price'
+      x-openapi-router-controller: swagger_server.controllers.price_controller
+  /price/{priceId}:
+    get:
+      summary: Get a price entry by ID
+      operationId: price_price_id_get
+      parameters:
+        - name: priceId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Price'
+      x-openapi-router-controller: swagger_server.controllers.price_controller
+    put:
+      summary: Update an existing price entry
+      operationId: price_price_id_put
+      parameters:
+        - name: priceId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Price'
+        required: true
+      responses:
+        "200":
+          description: Price entry updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Price'
+      x-openapi-router-controller: swagger_server.controllers.price_controller
+    delete:
+      summary: Delete a price entry by ID
+      operationId: price_price_id_delete
+      parameters:
+        - name: priceId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "204":
+          description: Price entry deleted successfully
+      x-openapi-router-controller: swagger_server.controllers.price_controller
+components:
+  schemas:
+    Price:
+      type: object
+      properties:
+        id:
+          type: string
+        productId:
+          type: string
+        basePrice:
+          type: number
+        currency:
+          type: string
+        scalePrices:
+          type: array
+          items:
+            $ref: '#/components/schemas/ScalePrice'
+        customerSpecificPrices:
+          type: array
+          items:
+            $ref: '#/components/schemas/CustomerSpecificPrice'
+    ScalePrice:
+      type: object
+      properties:
+        quantity:
+          type: integer
+        price:
+          type: number
+    CustomerSpecificPrice:
+      type: object
+      properties:
+        customerId:
+          type: string
+        price:
+          type: number
+    PriceList:
+      type: array
+      items:
+        $ref: '#/components/schemas/Price'
