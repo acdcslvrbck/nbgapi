@@ -3,7 +3,8 @@ info:
   title: NBG CIP Organization API
   version: "0.1"
   description: This is the API for managing organizations in the NBG CIP system provided
-   on the integration layer.
+   on the integration layer. It allows to create, update, delete and retrieve organizations 
+   and related customers. Find more information at http://swagger.io.
 servers:
 - url: https://api.server.test/v1
 paths:
