@@ -2,7 +2,7 @@ openapi: 3.0.3
 info:
   title: NBG CIP Product API
   version: "0.1"
-  description: This is the API for managing products in the NBG CIP system provided on the integration layer. It allows to create, update, delete and retrieve products and related customers. Find more information at [Swagger](http://swagger.io).
+  description: This is the API for managing products in the NBG CIP system provided on the integration layer. It allows to create, update, delete and retrieve products and related customers. [Confluence](https://teampenta-dortmund.atlassian.net/wiki/x/BQBSlw).
 servers:
 - url: https://api.server.test/v1
 paths:

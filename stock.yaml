@@ -1,7 +1,8 @@
 openapi: 3.0.3
 info:
   title: NBG CIP Stock API
-  version: "1.0"
+  version: "0.1"
+  description: This is the API for managing stock in the NBG CIP system provided on the integration layer. It allows to create, update, delete and retrieve stock entries and related products. [Confluence](https://teampenta-dortmund.atlassian.net/wiki/x/BQBSlw). 
 servers:
 - url: https://api.server.test/v1
 paths:
